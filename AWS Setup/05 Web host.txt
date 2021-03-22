@@ -1,0 +1,60 @@
+1. Build Apache
+	AWS console - EC2 - Instance - new
+	Name: user-web01
+	Amazon Linux something
+	Network: user-VPN
+	subnet: private-01
+	check 'protect form unexpected termination' something
+	Starge: General Purpose SSD
+	--Security Group
+	SSH		TCP	22	사용자	private IPv4/32
+	HTTP		TCP	80	사용자	0.0.0.0/0, ::/0
+	HTTPS		TCP	443	사용자	0.0.0.0/0, ::/0
+	모든 ICMP-IPv4	ICMP	0-65535	사용자	0.0.0.0/0, ::/0
+	use existing keypair
+
+	//Create web-02 in same way
+
+2. Access to web-01 via PuTTy
+	Use private IP of web-01
+	Use same .ppk file
+	****While openvpn is running
+
+3. Install apache
+	--After log-in with ec2-user
+	
+	//Change to root account
+	$sudo -s
+
+	//Install apache
+	#yum install httpd
+
+	//Auto-start when system on
+	#chkconfig httpd on
+
+	Open web browser and enter Private IPv4 address.
+	Check if it's working
+
+4. Create load Balancer
+	AWS console -EC2 - Load Balancer
+	Classic Load Balancer
+	Name: user-LB
+	VPC: user-VPC
+	Subnets: 2 public subnets
+	Create new security group
+	HTTP	TCP	80	사용자	0.0.0.0/0
+	Next....
+	Select Web-01 instance
+
+	Status - Edit
+	Ping protocol -> TCP
+
+	Copy LB's DNS address and put it in web browswe and see if it's working
+
+5. Regist Route53 and Connect to ELB
+	Google it
+	Route 53 - hosting - create
+	Create record
+	
+
+	

@@ -1,0 +1,21 @@
+PuTTy
+
+	//give apache permission to access wordpress folder
+	$sudo chown -R apache:apache /var/www/html/wordpress
+
+
+	Givin permission
+	//compare group 
+	$id user
+	$id apache
+
+	//put user to apache group
+	$sudo usermod -a -G apache user
+	
+	//check
+	$ id user
+	"uid=1001(david) gid=1002(david) groups=1002(david),48(apache)"
+
+	//change folder and file access limitation
+	$ sudo find /var/www/html/wordpress/ -type d -exec chmod 0777 {} \;
+	$ sudo find /var/www/html/wordpress/ -type f -exec chmod 0664 {} \;

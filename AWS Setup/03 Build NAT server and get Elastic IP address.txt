@@ -1,0 +1,23 @@
+1. Build NAT server
+	EC2 - Instance - start
+	Select the top console (Amzn-ami-vpc-nat-hvm-....)
+	T2 micro
+	Select VPN (user-VPN)
+	Select Subnet (public 01)
+	Check box (protect from unexpected termination...something..)
+	Storage: General purpose SSD
+	------Inbound Rule-----
+	SSH		TCP	22	사용자	0.0.0.0/0
+	모든트래픽		전체	전체	사용자	xxx.xxx.0.0/24
+	사용자지정UDP	UDP	1194	위치무관	0.0.0.0/0, ::/0
+	Keep Key pair (Important)
+	
+2. Elastic IP address
+	EC2 - Elastic IP address
+	Select Instance
+	Private IP address = private IPv4 address of Instance
+	GO to Routing table and add NAT instance to private routing table
+
+3. Go to Instance
+	to edit - Networking - 소스/대상 확인 변경
+	중지 체크 후 저장

@@ -1,0 +1,46 @@
+Order : VPN - Subnet - Internet Gateway - Routing Table
+
+1. VPN
+	Name: user-vpn
+	IPv4 CIDR - check IP from CMD (Command: ipconfig)
+		user xxx.xxx.0.0/24 to setup VPN
+	IPv6 CIDR - No Block
+	Tenancy - Default
+
+2. Subnet
+	Create 6 subnets (2 public, 4 private)
+	Name
+		user-public-01		
+		user-public-02		
+		user-private-01		
+		user-private-02
+		user-private-03
+		user-private-04
+	Location
+		a for public 01, private 01 and private 03
+		b for public 02, privatw 02 and private 04
+	IPv4 CIDR
+		xxx.xxx.0.0/27
+		xxx.xxx.0.32/27
+		xxx.xxx.0.64/27
+		xxx.xxx.0.96/27
+		xxx.xxx.0.128/27
+		xxx.xxx.0.160/27
+
+3. Internet Gateway
+	Name: User-InternetGateway
+	Connect to VPN after creation
+
+4. Routing Table
+	Create 2 routing tables (one for public subnets and other for private subnets)
+	--public
+		Connect to VPN
+		Connect to public subnets
+		Go to edit add 0.0.0.0/0 and connect to Internet Gateway
+	--private
+		Connect to VPN
+		Connect to private subnets
+		//after : Run instance and connect to NAT
+
+	
+	

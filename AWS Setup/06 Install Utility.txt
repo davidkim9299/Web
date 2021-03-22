@@ -1,0 +1,11 @@
+1. Install php
+	$sudo yum install php
+
+2. Install Mysql
+	$sudo yum install mysql mysql-server
+
+3. restart Apache
+	get in sbin directory
+	$systemctl httpd restart
+
+	

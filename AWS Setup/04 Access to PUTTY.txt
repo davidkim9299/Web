@@ -1,0 +1,56 @@
+1. Download PuTTYgen
+	convert KeyPair(.pem) to .ppk file
+	Key comment: user-key
+	click 'Save Private Key'
+	
+2. Install PuTTY
+	SSH> Auth> Browse and import .ppk file
+	Session - Host Name: Elastic IP address
+	'Open'
+
+3. Access PuTTy
+	log-in as: ec2-user
+	
+4. Install openVPN and get a permission to access
+	//Install git
+	$sudo yum install git
+	
+	//Get docker image
+	$sudo git clone https://github.com/kylemanna/docker-openvpn.git
+	
+	//Install Docker to make docker image
+	$sudo yum install docker
+	$sudo yum docker start
+
+	//Build docker image
+	$sudo docker build -t myopenvpn .
+
+	//Create a directory to store config and key
+	$mkdir vpn-data
+
+	//Run docker image
+	$sudo docker run -v $PWD/vpn-data:/etc/openvpn --rm myopenvpn ovpn_genconfig -u udp://ela.sti.cI.P:1194
+
+	//Create private Key
+	$sudo docker run -v $PWD/vpn-data:/etc/openvpn --rm -it myopenvpn ovpn_initpki
+	
+	//Run open VPN and allow port 1194
+	$sudo docker run -v $PWD/vpn-data:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN myopenvpn
+
+	//Create an account for VPN
+	$sudo docker run -V $PWD/vpn-data:/etc/openvpn --rm -it myopenvpn easyrsa build-client-full username nopass
+
+	//Create config file of openvpn user
+	$sudo docker run -v $PWD/vpn-data:/etc/eopnvpn --rm myopenvpn ovpn_getclient user > user.ovpn
+
+5. Get .ovpn file frum server to local computer
+	Install WinSCP
+	Host name: Elastic IP
+	Username: ec2-user
+	password: click browse and impoer .ppk file
+
+6. Run openvpn
+	window tray -> openvpn -> right click -> import -> import ovpn file
+
+7. Split Tunnel
+	$sudo docker run -v $PWD/vpn-data:/etc/openvpn --rm -it kylemanna/openvpn vi /etc/openvpn/openvpn.conf

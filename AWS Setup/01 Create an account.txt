@@ -1,0 +1,7 @@
+1. Create an AWS account
+	
+	-IAM user - not necessary
+
+2. Create CloudTrail -> show user their log history
+
+	- Service - CloudTrail 

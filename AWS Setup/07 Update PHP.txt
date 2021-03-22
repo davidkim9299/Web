@@ -1,0 +1,18 @@
+1. check the latest PHP version
+	$sudo amazon-linux-extras install epel
+	
+	/etc/yum/pluginconf.d/priorities.conf 
+	enabled = 1 to 0
+	
+	$sudo -s
+	
+	#yum list installed | grep php
+	#yum remove (   ) (   ) (   )
+	#yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+	#yum install yum-utils
+	#yum-config-manager --enable remi -php56
+	#yum install php.x86_64
+
+
+	
+	
